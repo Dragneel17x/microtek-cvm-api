@@ -1,0 +1,47 @@
+[
+  {
+    "customerGroup": "BD-Builder/Real Estate"
+  },
+  {
+    "customerGroup": "CF-C&F Agent"
+  },
+  {
+    "customerGroup": "CS-Govt. Canteens"
+  },
+  {
+    "customerGroup": "EB-Export-BI"
+  },
+  {
+    "customerGroup": "EM-Export-Microtek"
+  },
+  {
+    "customerGroup": "EO-Export-OEM"
+  },
+  {
+    "customerGroup": "GV-Government Sector"
+  },
+  {
+    "customerGroup": "IC-Inter-Company"
+  },
+  {
+    "customerGroup": "IN-Individual"
+  },
+  {
+    "customerGroup": "IT-Institutional"
+  },
+  {
+    "customerGroup": "NM-NON - OEM"
+  },
+  {
+    "customerGroup": "OM-OEM-MICROTEK"
+  },
+  {
+    "customerGroup": "PP-Proj. Channel Part"
+  },
+  {
+    "customerGroup": "RD-Retail Channel Dist."
+  },
+  {
+    "customerGroup": "RP-Retail Channel Part."
+  }
+]

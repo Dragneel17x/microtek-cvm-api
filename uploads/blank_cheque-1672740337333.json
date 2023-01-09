@@ -1,0 +1,17 @@
+[
+  {
+    "customerGroup": "ZDOM - Domestic Customer"
+  },
+  {
+    "customerGroup": "ZSHP - Goods Recipient"
+  },
+  {
+    "customerGroup": "ZINC - Individual Customer"
+  },
+  {
+    "customerGroup": "ZASC - Associate Customer"
+  },
+  {
+    "customerGroup": "ZEXP - Export Customer"
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "division": "10-PSD"
+  },
+  {
+    "division": "20-ESD"
+  },
+  {
+    "division": "30-Healthcare"
+  },
+  {
+    "division": "40-Services"
+  },
+  {
+    "division": "50-SSD"
+  },
+  {
+    "division": "99-Others"
+  },
+  {
+    "division": "90-Stock Transfer"
+  },
+  {
+    "division": "91-Scrap"
+  },
+  {
+    "division": "92-Assets"
+  }
+]

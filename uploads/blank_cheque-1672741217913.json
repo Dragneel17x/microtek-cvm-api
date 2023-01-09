@@ -1,0 +1,41 @@
+[
+  {
+    "distChannel": "10-Channel Sales -B2CH"
+  },
+  {
+    "distChannel": "20-Enterprise Sales"
+  },
+  {
+    "distChannel": "30-International Sales"
+  },
+  {
+    "distChannel": "35-Deemed Export"
+  },
+  {
+    "distChannel": "40-E-Commerce"
+  },
+  {
+    "distChannel": "50-Direct Customer- B2C"
+  },
+  {
+    "distChannel": "60-Inter-Company"
+  },
+  {
+    "distChannel": "70-OEM- Non Microtek"
+  },
+  {
+    "distChannel": "80-OEM - Microtek"
+  },
+  {
+    "distChannel": "90-Stock Transfer"
+  },
+  {
+    "distChannel": "91-Scrap"
+  },
+  {
+    "distChannel": "92-Assets"
+  },
+  {
+    "distChannel": "99-Others"
+  }
+]

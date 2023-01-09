@@ -1,0 +1,38 @@
+[
+  {
+    "reconciliationAccount": "11100080-Advance from Customers"
+  },
+  {
+    "reconciliationAccount": "11300001-Security Deposit Received"
+  },
+  {
+    "reconciliationAccount": "11300002-Security Deposit - Vehicles"
+  },
+  {
+    "reconciliationAccount": "21100001-Domestic Customers"
+  },
+  {
+    "reconciliationAccount": "21100002-Export Customer"
+  },
+  {
+    "reconciliationAccount": "21100003-Customer - Inter Group"
+  },
+  {
+    "reconciliationAccount": "21100004-Customer : Stock Transfer"
+  },
+  {
+    "reconciliationAccount": "21100005-Individual Customer"
+  },
+  {
+    "reconciliationAccount": "21100006-Goods Recipient"
+  },
+  {
+    "reconciliationAccount": "21100007-Employee Partner"
+  },
+  {
+    "reconciliationAccount": "21100008-Associate Customer"
+  },
+  {
+    "reconciliationAccount": "21100012-CRM Customer"
+  }
+]
