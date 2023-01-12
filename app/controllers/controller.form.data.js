@@ -256,7 +256,7 @@ exports.postFormData = async (req, res) => {
 				const insert_approval = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('customer_form',${data[0]},'${item.approval_level}','${formData.employee_id}','${item.approver_employee_id}','future_approval','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
 				console.log(insert_approval);
 			});
-			const insert_approval_manager = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('customer_form',${data[0]},'0','${formData.employee_id}','${sku_approval_data.approver_id}','pending','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
+			const insert_approval_manager = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('customer_form',${data[0]},'0','${formData.employee_id}','${sku_approval_data[0].approver_id}','pending','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
 			console.log(insert_approval_manager);
 			const send_data = {
 				status: 200,
