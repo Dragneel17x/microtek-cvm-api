@@ -44,8 +44,9 @@ module.exports = app => {
     cvm.get('/get-sales-office-district', form_data.getSalesOfficeDistrict)
     cvm.get('/get-customer-acc-grp', form_data.getCustomerAccountGroup)
     cvm.get('/get-customer-grp', form_data.getCustomerGroup)
-    cvm.get('/get-sales-office-district', form_data.getSalesDistrict)
+    //cvm.get('/get-sales-office-district', form_data.getSalesDistrict)
     cvm.get('/get-sales-district', form_data.getSalesDistrict)
+    cvm.get('/get-sbu-type', form_data.getSbuType)
     cvm.get('/get-pincode-mapping', form_data.getPincodeMapping)
     cvm.post('/get-pincode-data', form_data.getPincodeData)
 

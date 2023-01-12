@@ -192,6 +192,15 @@ exports.getPincodeData = async (req, res) => {
 	};
 	res.status(200).send(send_data);
 };
+exports.getSbuType = async (req, res) => {
+	const getSBUType = await sequelize.query("select * from sbu_master", { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getSBUType,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
 
 //post
 exports.postFormData = async (req, res) => {
@@ -215,16 +224,13 @@ exports.postFormData = async (req, res) => {
 	if (!reqFile.blank_cheque) {
 		reqFile.blank_cheque = [];
 	}
-	/* 
 
-    
- */
 	if (!formData) {
 		console.log("data not recieved");
 		return;
 	}
 
-	if (!(formData.cust_group && formData.cust_name && formData.cust_address && formData.cust_address_op1 && formData.co_person && formData.district && formData.city && formData.postal_code && formData.country && formData.company_code && formData.recon_acc && formData.pay_term && formData.sales_org && formData.dist_channel && formData.division && formData.sales_district && formData.sales_office && formData.employee_id)) {
+	if (!(formData.cust_group && formData.cust_name && formData.cust_address && formData.cust_address_op1 && formData.co_person && formData.district && formData.city && formData.postal_code && formData.country && formData.company_code && formData.recon_acc && formData.pay_term && formData.sales_org && formData.dist_channel && formData.division && formData.sales_district && formData.sales_office && formData.employee_id && formData.sbu_type)) {
 		const send_data = {
 			status: "401",
 			message: "all parameters required",
@@ -235,11 +241,11 @@ exports.postFormData = async (req, res) => {
 		/* console.log(Object.keys(formdata)); */
 
 		try {
+			const sku_approval_data = await sequelize.query(`select * from sbu_master where SBU_type = '${formData.sbu_type}' limit 1;`, { type: QueryTypes.SELECT });
+			console.log(sku_approval_data);
+
 			const approval_data = await sequelize.query(`select * from approval_matrix where approval_type = 'customer_form' order by approval_level;`, { type: QueryTypes.SELECT });
 			console.log(approval_data);
-
-			const approval_data_manager = await sequelize.query(`select reporting_manager_id manager_id from employee_records where new_e_code = '${formData.employee_id}';`, { type: QueryTypes.SELECT });
-			console.log(approval_data_manager);
 
 			const data = await sequelize.query(`insert into customer_form_data (customer_group,customer_name,customer_name_op,customer_address,customer_address_op1,customer_address_op2,customer_address_op3,district,state_code,city,postal_code,country,co_person,transportation_zone,mobile_no,email_id,company_code,reconciliation_acc,pay_term,sales_org,distribution_channel,division,sales_district,customer_acc_grp,sales_office,gstin,pan_number) values ('${formData.cust_group}','${formData.cust_name}','${formData.cust_name_op1}','${formData.cust_address}','${formData.cust_address_op1}','${formData.cust_address_op2}','${formData.cust_address_op3}','${formData.district}','${formData.state_code}','${formData.city}','${formData.postal_code}','${formData.country}','${formData.co_person}','${formData.transportation_zone}','${formData.mobile_no}','${formData.email_id}','${formData.company_code}','${formData.recon_acc}','${formData.pay_term}','${formData.sales_org}','${formData.dist_channel}','${formData.division}','${formData.sales_district}','${formData.customer_acc_group}','${formData.sales_office}','${formData.gstin}','${formData.pan}')`, { type: QueryTypes.INSERT });
 			console.log(data);
@@ -250,7 +256,7 @@ exports.postFormData = async (req, res) => {
 				const insert_approval = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('customer_form',${data[0]},'${item.approval_level}','${formData.employee_id}','${item.approver_employee_id}','future_approval','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
 				console.log(insert_approval);
 			});
-			const insert_approval_manager = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('customer_form',${data[0]},'0','${formData.employee_id}','${approval_data_manager.manager_id}','pending','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
+			const insert_approval_manager = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('customer_form',${data[0]},'0','${formData.employee_id}','${sku_approval_data.approver_id}','pending','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
 			console.log(insert_approval_manager);
 			const send_data = {
 				status: 200,
@@ -334,7 +340,7 @@ exports.customerFormApplrovals = async (req, res) => {
 		};
 		res.status(401).send(send_data);
     }
-    const form_data = await sequelize.query(`select * from approval_inbox ai left outer join customer_form_data cfd on ai.request_id = cfd.id where request_type = 'customer_form' and approver_employee_id = '${employee_id}' and status = 'pending';`, { type: QueryTypes.SELECT });
+    const form_data = await sequelize.query(`select * from approval_inbox ai left outer join customer_form_data cfd on ai.request_id = cfd.id where request_type = 'customer_form' and approver_employee_id = '${employee_id}' and ai.status = 'pending';`, { type: QueryTypes.SELECT });
 	console.log(form_data);
 
     const send_data = {
