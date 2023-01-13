@@ -16,7 +16,7 @@ app.use(cors());
 app.use(bodyParser())
 dotenv.config({path:'./.env'});
 // parse requests of content-type - application/json
-app.use(express.json({ limit: '20mb' }));
+app.use(express.json({ limit: '200mb' }));
 app.use((error, req, res, next) => {
   console.log('This is the rejected field ->', error.field);
 });
