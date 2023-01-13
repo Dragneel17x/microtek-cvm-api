@@ -383,7 +383,7 @@ exports.getSubmissionView = async (req, res) => {
 			data: form_data,
 			message: "Data Fetched Successfully",
 		};
-		res.status(500).send(send_data);
+		res.status(200).send(send_data);
 	} catch (error) {
 		console.log(error);
 		const send_data = {
