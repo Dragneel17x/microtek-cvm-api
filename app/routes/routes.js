@@ -55,6 +55,7 @@ module.exports = app => {
     cvm.post('/get-state-list', form_data.getStateList)
     cvm.post('/approve-form', form_data.approveForm)
     cvm.post('/get-approval-forms', form_data.customerFormApplrovals)
+    cvm.post('/get-submission-view', form_data.getSubmissionView)
     cvm.post('/post-form-data',upload.fields([{name:"blank_cheque",maxCount:1},{name:"GST_Image",maxCount:1},{name:"PAN_Image",maxCount:1},{name:"declaration",maxCount:1},{name:"DAPF",maxCount:1}]), form_data.postFormData)
     
 
