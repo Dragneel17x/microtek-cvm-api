@@ -376,7 +376,7 @@ exports.getSubmissionView = async (req, res) => {
 		res.status(401).send(send_data);
 	}
 	try {
-		const form_data = await sequelize.query(`select * from customer_form_data where created_by = '${employee_id}'`, { type: QueryTypes.SELECT });
+		const form_data = await sequelize.query(`select cfd.*, ai.status ai_status, ai.approval_level, approver_employee_id from customer_form_data cfd left join approval_inbox ai on cfd.id = ai.request_id  where cfd.created_by = '${employee_id}'`, { type: QueryTypes.SELECT });
 		console.log(form_data);
 		const send_data = {
 			status: "200",
