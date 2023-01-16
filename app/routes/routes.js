@@ -1,7 +1,8 @@
 module.exports = app => {
     //Middleware Function
     const commonAuth = require("../middleware/auth.common");
-
+    //
+    const gstSchedular = require("../controllers/controller.gstSchedular")
     // Controller Functions
     const product_model = require("../controllers/controller.product.model");
     const form_data = require("../controllers/controller.form.data")
