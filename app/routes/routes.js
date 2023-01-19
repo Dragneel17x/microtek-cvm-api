@@ -5,8 +5,8 @@ module.exports = app => {
     const gstSchedular = require("../controllers/controller.gstSchedular")
     // Controller Functions
     const product_model = require("../controllers/controller.product.model");
-    const form_data = require("../controllers/controller.form.data")
-
+    const form_data = require("../controllers/controller.customer.form.data")
+    const vendor_form_data = require('../controllers/controller.vendor.formdata')
     // Router Define
     
     var cvm = require("express").Router();
@@ -49,10 +49,14 @@ module.exports = app => {
     cvm.get('/get-sales-district', form_data.getSalesDistrict)
     cvm.get('/get-sbu-type', form_data.getSbuType)
     cvm.get('/get-pincode-mapping', form_data.getPincodeMapping)
-    cvm.post('/get-pincode-data', form_data.getPincodeData)
+    
+    // vendor form data
+    cvm.get('/get-order-currency', vendor_form_data.getOrderCurrency)
+    cvm.get('/get-vendor-grp', vendor_form_data.getVendorGrp)
 
 // Post 
 
+    cvm.post('/get-pincode-data', form_data.getPincodeData)
     cvm.post('/get-state-list', form_data.getStateList)
     cvm.post('/approve-form', form_data.approveForm)
     cvm.post('/get-approval-forms', form_data.customerFormApplrovals)

@@ -202,6 +202,7 @@ exports.getSbuType = async (req, res) => {
 	res.status(200).send(send_data);
 };
 
+
 //post
 exports.postFormData = async (req, res) => {
 	const formData = req.body;
@@ -230,7 +231,7 @@ exports.postFormData = async (req, res) => {
 		return;
 	}
 
-	if (!(formData.cust_group && formData.cust_name && formData.cust_address && formData.cust_address_op1 && formData.co_person && formData.district && formData.city && formData.postal_code && formData.country && formData.company_code && formData.recon_acc && formData.pay_term && formData.sales_org && formData.dist_channel && formData.division && formData.sales_district && formData.sales_office && formData.employee_id && formData.sbu_type)) {
+	if (!(formData.cust_group && formData.cust_name && formData.cust_address && formData.co_person && formData.district && formData.city && formData.postal_code && formData.country && formData.company_code && formData.recon_acc && formData.pay_term && formData.sales_org && formData.dist_channel && formData.division && formData.sales_district && formData.sales_office && formData.employee_id && formData.sbu_type)) {
 		const send_data = {
 			status: "401",
 			message: "all parameters required",
@@ -247,10 +248,10 @@ exports.postFormData = async (req, res) => {
 			const approval_data = await sequelize.query(`select * from approval_matrix where approval_type = 'customer_form' order by approval_level;`, { type: QueryTypes.SELECT });
 			console.log(approval_data);
 
-			const data = await sequelize.query(`insert into customer_form_data (customer_group,customer_name,customer_name_op,customer_address,customer_address_op1,customer_address_op2,customer_address_op3,district,state_code,city,postal_code,country,co_person,transportation_zone,mobile_no,email_id,company_code,reconciliation_acc,pay_term,sales_org,distribution_channel,division,sales_district,customer_acc_grp,sales_office,gstin,pan_number, sbu_type, created_by, updated_by) values ('${formData.cust_group}','${formData.cust_name}','${formData.cust_name_op1}','${formData.cust_address}','${formData.cust_address_op1}','${formData.cust_address_op2}','${formData.cust_address_op3}','${formData.district}','${formData.state_code}','${formData.city}','${formData.postal_code}','${formData.country}','${formData.co_person}','${formData.transportation_zone}','${formData.mobile_no}','${formData.email_id}','${formData.company_code}','${formData.recon_acc}','${formData.pay_term}','${formData.sales_org}','${formData.dist_channel}','${formData.division}','${formData.sales_district}','${formData.customer_acc_group}','${formData.sales_office}','${formData.gstin}','${formData.pan}', '${formData.sbu_type}', '${formData.employee_id}', '${formData.employee_id}')`, { type: QueryTypes.INSERT });
+			const data = await sequelize.query(`insert into customer_form_data (customer_group,customer_name,customer_name_op,customer_address,customer_address_op1,customer_address_op2,customer_address_op3,district,state_code,city,postal_code,country,co_person,transportation_zone,mobile_no,email_id,company_code,reconciliation_acc,pay_term,sales_org,distribution_channel,division,sales_district,customer_acc_grp,sales_office,gstin,tan_number,pan_number, sbu_type, created_by, updated_by) values ('${formData.cust_group}','${formData.cust_name}','${formData.cust_name_op1}','${formData.cust_address}','${formData.cust_address_op1}','${formData.cust_address_op2}','${formData.cust_address_op3}','${formData.district}','${formData.state_code}','${formData.city}','${formData.postal_code}','${formData.country}','${formData.co_person}','${formData.transportation_zone}','${formData.mobile_no}','${formData.email_id}','${formData.company_code}','${formData.recon_acc}','${formData.pay_term}','${formData.sales_org}','${formData.dist_channel}','${formData.division}','${formData.sales_district}','${formData.customer_acc_group}','${formData.sales_office}','${formData.gstin}','${formData.tan_number}','${formData.pan}', '${formData.sbu_type}', '${formData.employee_id}', '${formData.employee_id}')`, { type: QueryTypes.INSERT });
 			console.log(data);
 
-			const postData = await sequelize.query(`INSERT INTO file_path_mapping (form_data_id , blank_cheque, GST_Image, PAN_Image, declaration, DAPF) VALUES (${data[0]} , '${reqFile?.blank_cheque[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.GST_Image[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.PAN_Image[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}','${reqFile?.declaration[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.DAPF[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}')`, { type: QueryTypes.INSERT });
+			const postData = await sequelize.query(`INSERT INTO file_path_mapping (form_data_id , form_type, blank_cheque, GST_Image, PAN_Image, declaration, DAPF) VALUES (${data[0]} , 'customer_form','${reqFile?.blank_cheque[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.GST_Image[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.PAN_Image[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}','${reqFile?.declaration[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.DAPF[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}')`, { type: QueryTypes.INSERT });
 			console.log("postdata" + postData);
 			approval_data.map(async (item) => {
 				const insert_approval = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('customer_form',${data[0]},'${item.approval_level}','${formData.employee_id}','${item.approver_employee_id}','future_approval','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
