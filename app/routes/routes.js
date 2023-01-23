@@ -7,6 +7,7 @@ module.exports = app => {
     const product_model = require("../controllers/controller.product.model");
     const form_data = require("../controllers/controller.customer.form.data")
     const vendor_form_data = require('../controllers/controller.vendor.formdata')
+    const material_creation_data = require('../controllers/controller.materialcreation.formdata')
     // Router Define
     
     var cvm = require("express").Router();
@@ -14,8 +15,9 @@ module.exports = app => {
     var multer = require('multer');
     var storage = multer.diskStorage({
         destination: (req, file, callBack) => {
+
             callBack(null, 'uploads')     // './public/images/' directory name where save the file
-        },
+        },  
         filename: (req, file, callBack) => {
             callBack(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
         }
@@ -53,6 +55,9 @@ module.exports = app => {
     // vendor form data
     cvm.get('/get-order-currency', vendor_form_data.getOrderCurrency)
     cvm.get('/get-vendor-grp', vendor_form_data.getVendorGrp)
+
+    // material creation form 
+    cvm.get('/get-plant-name', material_creation_data.getPlantData)
 
 // Post 
 
