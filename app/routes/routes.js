@@ -55,6 +55,7 @@ module.exports = app => {
     // vendor form data
     cvm.get('/get-order-currency', vendor_form_data.getOrderCurrency)
     cvm.get('/get-vendor-grp', vendor_form_data.getVendorGrp)
+    cvm.get('/get-vendor-pay-term', vendor_form_data.getVendorPayTerm)
 
     // material creation form 
     cvm.get('/get-plant-name', material_creation_data.getPlantData)

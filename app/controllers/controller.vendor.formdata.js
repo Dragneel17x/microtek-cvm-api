@@ -89,3 +89,16 @@ exports.postFormData = async (req, res) => {
 		}
 	}
 };
+exports.getVendorPayTerm = async(req,res)=>{
+
+	const getVendorPayTerm = await sequelize.query(`Select * from vendor_pay_term_master`,{type: QueryTypes.SELECT});
+
+	const send_data = {
+		status: 200,
+		data: getVendorPayTerm, 
+		message: "Data Fetched Successfully"
+	}
+
+	res.status(200).send(send_data);
+	
+}
