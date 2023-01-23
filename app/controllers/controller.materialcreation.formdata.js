@@ -15,4 +15,5 @@ exports.getPlantData = async (req,res)=>{
 		message: "data fetched successfully",
 	};
 	res.status(200).send(send_data);
+    console.log(send_data);
 }
