@@ -432,3 +432,44 @@ exports.addtoSAP = async (req, res) => {
 		res.status(500).send(send_data);
 	}
 }
+exports.getfiles = async (req, res) => {
+	const { form_id } = req.body;
+	if (!form_id) {
+		const send_data = {
+			status: "401",
+			message: "all parameters required",
+		};
+		res.status(401).send(send_data);
+	}
+	try {
+		let final_data = {
+			blank_cheque:"",
+
+		}
+		const form_data = await sequelize.query(`select * from file_path_mapping where form_data_id = '${form_id}' and form_type = 'customer_form' ;`, { type: QueryTypes.SELECT });
+		console.log(form_data);
+		if (!form_data?.length) {
+			const send_data = {
+				status: "200",
+				message: "NO DATA FOUND",
+			};
+		}
+		if (form_data[0]?.blank_cheque != 'undefined') {
+			var file;
+			file = fs.readFileSync(form_data[0]?.blank_cheque, 'base64');
+			final_data.blank_cheque = file;
+		}
+		const send_data = {
+			status: "200",
+			message: "Data saved Successfully",
+		};
+		res.status(200).send(send_data);
+	} catch (error) {
+		console.log(error);
+		const send_data = {
+			status: "500",
+			message: "Some Un-Expected Error Occured",
+		};
+		res.status(500).send(send_data);
+	}
+}

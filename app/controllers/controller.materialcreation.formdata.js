@@ -67,3 +67,25 @@ exports.getMatSalesOrg = async(req,res)=>{
      }
      res.status(200).send(send_data);
 }
+
+exports.getMatDistChannel = async (req,res)=>{
+
+	const getMatDistChannel = await sequelize.query(`select * from mat_dist_channel_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getMatDistChannel,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+exports.getBaseUnitMeasure = async (req,res)=>{
+
+	const getBaseUnitMeasure = await sequelize.query(`select * from base_unit_measure_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getBaseUnitMeasure,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}

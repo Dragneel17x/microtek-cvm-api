@@ -61,6 +61,9 @@ module.exports = app => {
     cvm.get('/get-plant-name', material_creation_data.getPlantData)
     cvm.post('/get-storage-location',material_creation_data.getStorageLocation)
     cvm.get('/get-mat-sales-org', material_creation_data.getMatSalesOrg)
+    cvm.get(`/get-mat-dist-channel`, material_creation_data.getMatDistChannel)
+    cvm.get(`/get-base-unit-measure`, material_creation_data.getBaseUnitMeasure)
+    
 
 // Post 
 
