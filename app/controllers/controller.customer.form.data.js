@@ -387,7 +387,7 @@ exports.getSubmissionView = async (req, res) => {
 		res.status(500).send(send_data);
 	}
 };
-exports.getAllForms = async (req, res) => {
+exports.getAllFormsMDM = async (req, res) => {
 	try {
 		const form_data = await sequelize.query(`select * from customer_form_data where status = 'approved' and added_to_sap = false;`, { type: QueryTypes.SELECT });
 		console.log(form_data);
@@ -407,8 +407,8 @@ exports.getAllForms = async (req, res) => {
 	}
 }
 exports.addtoSAP = async (req, res) => {
-	const { employee_id } = req.body;
-	if (!employee_id) {
+	const { employee_id, sap_code, form_id } = req.body;
+	if (!(employee_id, sap_code, form_id)) {
 		const send_data = {
 			status: "401",
 			message: "all parameters required",
@@ -416,12 +416,11 @@ exports.addtoSAP = async (req, res) => {
 		res.status(401).send(send_data);
 	}
 	try {
-		const form_data = await sequelize.query(`select * from customer_form_data where status = 'approved' and added_to_sap = false;`, { type: QueryTypes.SELECT });
+		const form_data = await sequelize.query(`update customer_form_data set added_to_sap = true, sap_customer_code = '${sap_code}' where id = ${form_id};`, { type: QueryTypes.UPDATE });
 		console.log(form_data);
 		const send_data = {
 			status: "200",
-			data: form_data,
-			message: "Data Fetched Successfully",
+			message: "Data saved Successfully",
 		};
 		res.status(200).send(send_data);
 	} catch (error) {
