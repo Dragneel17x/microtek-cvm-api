@@ -59,6 +59,7 @@ module.exports = app => {
 
     // material creation form 
     cvm.get('/get-plant-name', material_creation_data.getPlantData)
+    cvm.post('/get-storage-location',material_creation_data.getStorageLocation)
 
 // Post 
 

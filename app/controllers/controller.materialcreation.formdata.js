@@ -15,7 +15,6 @@ exports.getPlantData = async (req,res)=>{
 		message: "data fetched successfully",
 	};
 	res.status(200).send(send_data);
-    console.log(send_data);
 }
 /* exports.getStorageLocation = async (req,res)=>{
 
@@ -39,7 +38,7 @@ exports.getStorageLocation= async (req, res) => {
 		return;
 	}
 
-    const getPlantCode = await sequelize.query(`select plant_code from plant_master where plant_name = '${plant_name}'`, {type:QueryTypes.SELECT});
+    const getPlantCode = await sequelize.query(`select distinct(plant_code) code from plant_master where plant_name = '${plant_name}'`, {type:QueryTypes.SELECT});
 	const getStorageLocationMapping = await sequelize.query(`select * from storage_location_master where plant_code = '${getPlantCode}'`, { type: QueryTypes.SELECT });
 	console.log(getStorageLocationMapping);
 	if (!getStorageLocationMapping?.length) {
