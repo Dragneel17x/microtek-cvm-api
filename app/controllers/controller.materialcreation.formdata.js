@@ -56,3 +56,15 @@ exports.getStorageLocation= async (req, res) => {
 	};
 	res.status(200).send(send_data);
 };
+
+exports.getMatSalesOrg = async(req,res)=>{
+     const getMatSalesOrg = await sequelize.query(`select * from mat_sales_org`, {type: QueryTypes.SELECT})
+
+     const send_data = {
+        status: 200,
+        data: getMatSalesOrg,
+        message: "Data Fetched Succesfully"
+     }
+
+     res.status(200).data(send_data);
+}

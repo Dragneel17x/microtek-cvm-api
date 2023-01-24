@@ -201,9 +201,6 @@ exports.getSbuType = async (req, res) => {
 	};
 	res.status(200).send(send_data);
 };
-
-
-//post
 exports.postFormData = async (req, res) => {
 	const formData = req.body;
 	console.log(req.body);
@@ -274,7 +271,6 @@ exports.postFormData = async (req, res) => {
 		}
 	}
 };
-
 exports.approveForm = async (req, res) => {
 	const { status, approver_remarks, employee_id, approval_id } = req.body;
 	if (!(status && employee_id && approval_id)) {
@@ -330,7 +326,6 @@ exports.approveForm = async (req, res) => {
 	});
 	return;
 };
-
 exports.customerFormApplrovals = async (req, res) => {
 	const { employee_id } = req.body;
 
@@ -351,7 +346,6 @@ exports.customerFormApplrovals = async (req, res) => {
 	};
 	res.status(200).send(send_data);
 };
-
 function getDate() {
 	var date = new Date();
 	var day = date.getDate();
@@ -366,7 +360,6 @@ function getDate() {
 	const final_date = month + "/" + day + "/" + year;
 	return final_date;
 }
-
 exports.getSubmissionView = async (req, res) => {
 	const { employee_id } = req.body;
 	if (!employee_id) {
@@ -394,3 +387,49 @@ exports.getSubmissionView = async (req, res) => {
 		res.status(500).send(send_data);
 	}
 };
+exports.getAllForms = async (req, res) => {
+	try {
+		const form_data = await sequelize.query(`select * from customer_form_data where status = 'approved' and added_to_sap = false;`, { type: QueryTypes.SELECT });
+		console.log(form_data);
+		const send_data = {
+			status: "200",
+			data: form_data,
+			message: "Data Fetched Successfully",
+		};
+		res.status(200).send(send_data);
+	} catch (error) {
+		console.log(error);
+		const send_data = {
+			status: "500",
+			message: "Some Un-Expected Error Occured",
+		};
+		res.status(500).send(send_data);
+	}
+}
+exports.addtoSAP = async (req, res) => {
+	const { employee_id } = req.body;
+	if (!employee_id) {
+		const send_data = {
+			status: "401",
+			message: "all parameters required",
+		};
+		res.status(401).send(send_data);
+	}
+	try {
+		const form_data = await sequelize.query(`select * from customer_form_data where status = 'approved' and added_to_sap = false;`, { type: QueryTypes.SELECT });
+		console.log(form_data);
+		const send_data = {
+			status: "200",
+			data: form_data,
+			message: "Data Fetched Successfully",
+		};
+		res.status(200).send(send_data);
+	} catch (error) {
+		console.log(error);
+		const send_data = {
+			status: "500",
+			message: "Some Un-Expected Error Occured",
+		};
+		res.status(500).send(send_data);
+	}
+}
