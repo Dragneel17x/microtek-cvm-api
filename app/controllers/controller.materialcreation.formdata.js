@@ -52,7 +52,7 @@ exports.getStorageLocation= async (req, res) => {
 	}
 	const send_data = {
 		status: 200,
-		data: getStorageLocationMapping[0],
+		data: getStorageLocationMapping,
 		message: "data fetched successfully",
 	};
 	res.status(200).send(send_data);
