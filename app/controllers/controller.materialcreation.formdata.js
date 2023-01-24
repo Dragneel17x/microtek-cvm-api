@@ -39,7 +39,7 @@ exports.getStorageLocation= async (req, res) => {
 	}
 
     const getPlantCode = await sequelize.query(`select distinct(plant_code) code from plant_master where plant_name = '${plant_name}'`, {type:QueryTypes.SELECT});
-	const getStorageLocationMapping = await sequelize.query(`select * from storage_location_master where plant_code = '${getPlantCode}'`, { type: QueryTypes.SELECT });
+	const getStorageLocationMapping = await sequelize.query(`select * from storage_location_master where plant_code = '${getPlantCode[0]?.code}'`, { type: QueryTypes.SELECT });
 	console.log(getStorageLocationMapping);
 	if (!getStorageLocationMapping?.length) {
 		const send_data = {
