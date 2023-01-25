@@ -157,7 +157,7 @@ exports.getQualityInspType = async (req,res)=>{
 
 exports.getMatType = async (req,res)=>{
 
-	const getMatType = await sequelize.query(`select * from material_type_master`, { type: QueryTypes.SELECT });
+	const getMatType = await sequelize.query(`select distinct material_type from material_type_master`, { type: QueryTypes.SELECT });
 	const send_data = {
 		status: 200,
 		data: getMatType,
