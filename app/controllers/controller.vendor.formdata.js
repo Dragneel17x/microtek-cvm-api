@@ -124,3 +124,130 @@ exports.vendorFormApplrovals = async (req, res) => {
 	};
 	res.status(200).send(send_data);
 };
+exports.getSubmissionView = async (req, res) => {
+	const { employee_id } = req.body;
+	if (!employee_id) {
+		const send_data = {
+			status: "401",
+			message: "all parameters required",
+		};
+		res.status(401).send(send_data);
+	}
+	try {
+		const form_data = await sequelize.query(`select cfd.*, ai.status ai_status, ai.approval_level, ai.approver_remarks, approver_employee_id from vendor_form_data cfd left join approval_inbox ai on cfd.id = ai.request_id  where cfd.created_by = '${employee_id}'`, { type: QueryTypes.SELECT });
+		console.log(form_data);
+		const send_data = {
+			status: "200",
+			data: form_data,
+			message: "Data Fetched Successfully",
+		};
+		res.status(200).send(send_data);
+	} catch (error) {
+		console.log(error);
+		const send_data = {
+			status: "500",
+			message: "Some Un-Expected Error Occured",
+		};
+		res.status(500).send(send_data);
+	}
+};
+exports.approveForm = async (req, res) => {
+	const { status, approver_remarks, employee_id, approval_id } = req.body;
+	if (!(status && employee_id && approval_id)) {
+		const send_data = {
+			status: "401",
+			message: "all parameters required",
+		};
+		res.status(401).send(send_data);
+	}
+	const date = getDate();
+	const change_approval_status = await sequelize.query(`UPDATE approval_inbox SET status = '${status}', approver_remarks = '${approver_remarks}', approval_date = current_date(), updated_by = '${employee_id}' WHERE approval_id = ${approval_id} ;`, { type: QueryTypes.UPDATE });
+	console.log(change_approval_status);
+	const form_data = await sequelize.query(`select * from approval_inbox where approval_id = ${approval_id};`, { type: QueryTypes.SELECT });
+	console.log(form_data);
+
+	if (form_data.length) {
+		const form_id = form_data[0].request_id;
+		if (status == "rejected") {
+			const change_approval_status = await sequelize.query(`UPDATE approval_inbox SET status = 'neglect', approver_remarks = 'rejected by previous approver', updated_by = 'auto' WHERE request_id = ${form_id} and approval_id != ${approval_id} and request_type = 'customer_form';`, { type: QueryTypes.INSERT });
+			console.log(change_approval_status);
+			const leave_status = await sequelize.query(`UPDATE vendor_form_data set status = '${status}' where id = '${form_id}'`, { type: QueryTypes.INSERT });
+			console.log(leave_status);
+			res.status(200).send({
+				status: 200,
+				message: `Leave Status Changed`,
+			});
+			return;
+		}
+		const approval_data_next = await sequelize.query(`select * from approval_inbox where request_id = ${form_id} and status = 'future_approval' order by approval_level limit 1;`, { type: QueryTypes.SELECT });
+		console.log(approval_data_next);
+		if (approval_data_next.length) {
+			const next_approval = approval_data_next[0].approval_id;
+			const change_approval_status = await sequelize.query(`UPDATE approval_inbox SET status = 'pending', updated_by = 'auto' WHERE approval_id = ${next_approval} ;`, { type: QueryTypes.INSERT });
+			console.log(change_approval_status);
+			res.status(200).send({
+				status: 200,
+				message: `Leave Status Changed`,
+			});
+			return;
+		} else {
+			const leave_status = await sequelize.query(`UPDATE vendor_form_data set status = '${status}' where id = '${form_id}'`, { type: QueryTypes.INSERT });
+			console.log(leave_status);
+			res.status(200).send({
+				status: 200,
+				message: `Leave Status Changed`,
+			});
+			return;
+		}
+	}
+	res.status(200).send({
+		status: 200,
+		message: `Wrong Leave`,
+	});
+	return;
+};
+exports.getAllFormsMDM = async (req, res) => {
+	try {
+		const form_data = await sequelize.query(`select * from vendor_form_data where status = 'approved' and added_to_sap = false;`, { type: QueryTypes.SELECT });
+		console.log(form_data);
+		const send_data = {
+			status: "200",
+			data: form_data,
+			message: "Data Fetched Successfully",
+		};
+		res.status(200).send(send_data);
+	} catch (error) {
+		console.log(error);
+		const send_data = {
+			status: "500",
+			message: "Some Un-Expected Error Occured",
+		};
+		res.status(500).send(send_data);
+	}
+}
+exports.addtoSAP = async (req, res) => {
+	const { employee_id, sap_code, form_id } = req.body;
+	if (!(employee_id, sap_code, form_id)) {
+		const send_data = {
+			status: "401",
+			message: "all parameters required",
+		};
+		res.status(401).send(send_data);
+	}
+	try {
+		const form_data = await sequelize.query(`update vendor_form_data set added_to_sap = true, sap_vendor_code = '${sap_code}' where id = ${form_id};`, { type: QueryTypes.UPDATE });
+		console.log(form_data);
+		const send_data = {
+			status: "200",
+			message: "Data saved Successfully",
+		};
+		res.status(200).send(send_data);
+	} catch (error) {
+		console.log(error);
+		const send_data = {
+			status: "500",
+			message: "Some Un-Expected Error Occured",
+		};
+		res.status(500).send(send_data);
+	}
+}
