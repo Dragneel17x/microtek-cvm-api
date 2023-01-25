@@ -453,6 +453,7 @@ exports.getfiles = async (req, res) => {
 				status: "200",
 				message: "NO DATA FOUND",
 			};
+			res.status(200).send(send_data);
 		}
 		if (form_data[0]?.blank_cheque != 'undefined') {
 			var file;
