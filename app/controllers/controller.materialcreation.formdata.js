@@ -89,3 +89,103 @@ exports.getBaseUnitMeasure = async (req,res)=>{
 	};
 	res.status(200).send(send_data);
 }
+exports.getMatGrp = async (req,res)=>{
+
+	const getMatGrp = await sequelize.query(`select * from mat_grp_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getMatGrp,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+exports.getMatDiv = async (req,res)=>{
+
+	const getMatDiv = await sequelize.query(`select * from mat_div_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getMatDiv,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+exports.getMatPriceGrp = async (req,res)=>{
+
+	const getMatPriceGrp = await sequelize.query(`select * from mat_price_grp_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getMatPriceGrp,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+exports.getMatPurchaseGrp = async (req,res)=>{
+
+	const getMatPurchaseGrp = await sequelize.query(`select * from mat_purchase_grp_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getMatPurchaseGrp,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+exports.getSerialNoProfile = async (req,res)=>{
+
+	const getSerialNoProfile = await sequelize.query(`select * from serial_no_profile_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getSerialNoProfile,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+exports.getQualityInspType = async (req,res)=>{
+
+	const getQualityInspType = await sequelize.query(`select * from quality_insp_type_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getQualityInspType,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+exports.getMatType = async (req,res)=>{
+
+	const getMatType = await sequelize.query(`select * from material_type_master`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getMatType,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+exports.getValuationType = async (req,res)=>{
+
+    const { mat_type } = req.body;
+	if (!mat_type) {
+		const send_data = {
+			status: 400,
+			message: "Material Name Required",
+		};
+		res.status(400).send(send_data);
+		return;
+	}
+
+	const getValuationType = await sequelize.query(`select * from valuation_type_master where material_type = '${mat_type}'`, { type: QueryTypes.SELECT });
+	const send_data = {
+		status: 200,
+		data: getValuationType,
+		message: "data fetched successfully",
+	};
+	res.status(200).send(send_data);
+}
+
+
+

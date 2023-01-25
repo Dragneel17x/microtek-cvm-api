@@ -63,7 +63,15 @@ module.exports = app => {
     cvm.get('/get-mat-sales-org', material_creation_data.getMatSalesOrg)
     cvm.get(`/get-mat-dist-channel`, material_creation_data.getMatDistChannel)
     cvm.get(`/get-base-unit-measure`, material_creation_data.getBaseUnitMeasure)
-    
+    cvm.get(`/get-mat-grp`, material_creation_data.getMatGrp)
+    cvm.get(`/get-mat-div`, material_creation_data.getMatDiv)
+    cvm.get(`/get-mat-price-grp`, material_creation_data.getMatPriceGrp)
+    cvm.get(`/get-mat-purchase-grp`, material_creation_data.getMatPurchaseGrp)
+    cvm.get(`/get-serial-no-profile`, material_creation_data.getSerialNoProfile)
+    cvm.get(`/get-quality-insp-type`, material_creation_data.getQualityInspType)
+    cvm.get(`/get-mat-type`, material_creation_data.getMatType)
+    cvm.post(`/get-valuation-type`, material_creation_data.getValuationType)
+
 
 // Post 
 
