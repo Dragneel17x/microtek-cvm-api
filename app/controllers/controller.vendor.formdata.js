@@ -51,14 +51,16 @@ exports.postFormData = async (req, res) => {
 		return;
 	}
 
-	if (!(formData.vendor_group && formData.vendor_name && formData.vendor_address && formData.vendor_address_op1 && formData.co_person && formData.city && formData.postal_code && formData.country && formData.company_code && formData.bank_acc_no && formData.pay_term && formData.name_on_acc && formData.ifsc_code && formData.employee_id)) {
+	/* if (!(formData.vendor_group && formData.vendor_name && formData.vendor_address && formData.vendor_address_op1 && formData.co_person && formData.city && formData.postal_code && formData.country && formData.company_code && formData.bank_acc_no && formData.pay_term && formData.name_on_acc && formData.ifsc_code && formData.employee_id)) {
 		const send_data = {
 			status: "401",
 			message: "all parameters required",
 		};
 
 		res.status(401).send(send_data);
-	} else {
+	} */
+	if(false){}
+	else {
 		/* console.log(Object.keys(formdata)); */
 
 		try {
@@ -100,5 +102,5 @@ exports.getVendorPayTerm = async(req,res)=>{
 	}
 
 	res.status(200).send(send_data);
-	
+
 }
