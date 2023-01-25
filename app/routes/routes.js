@@ -79,6 +79,8 @@ module.exports = app => {
     cvm.post('/get-state-list', form_data.getStateList)
     cvm.post('/approve-form', form_data.approveForm)
     cvm.post('/get-approval-forms', form_data.customerFormApplrovals)
+    cvm.post('/get-vendor-approval-forms', vendor_form_data.vendorFormApplrovals)
+    cvm.post('/get-materia-approval-forms', material_creation_data.materialFormApplrovals)
     cvm.post('/get-submission-view', form_data.getSubmissionView)
     cvm.post('/get-mdm-view', form_data.getAllFormsMDM);
     cvm.post('/add-sap-code', form_data.addtoSAP);

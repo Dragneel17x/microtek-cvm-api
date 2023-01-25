@@ -188,4 +188,23 @@ exports.getValuationType = async (req,res)=>{
 }
 
 
+exports.materialFormApplrovals = async (req, res) => {
+	const { employee_id } = req.body;
 
+	if (!employee_id) {
+		const send_data = {
+			status: "401",
+			message: "all parameters required",
+		};
+		res.status(401).send(send_data);
+	}
+	const form_data = await sequelize.query(`select * from approval_inbox ai left outer join vendor_form_data cfd on ai.request_id = cfd.id where request_type = 'vendor_form' and approver_employee_id = '${employee_id}' and ai.status = 'pending';`, { type: QueryTypes.SELECT });
+	console.log(form_data);
+
+	const send_data = {
+		status: "200",
+		data: form_data,
+		message: "Data Fetched Successfully",
+	};
+	res.status(200).send(send_data);
+};
