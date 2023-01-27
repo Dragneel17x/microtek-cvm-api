@@ -177,6 +177,7 @@ exports.getValuationType = async (req,res)=>{
 		res.status(400).send(send_data);
 		return;
 	}
+    console.log("mat_type");
 
     const getMaterialType = await sequelize.query(`select material_type from material_type_master where mat_desc = '${mat_type}'`, {type:QueryTypes.SELECT});
 	const getValuationType = await sequelize.query(`select * from valuation_type_master where material_type = '${getMaterialType}'`, { type: QueryTypes.SELECT });
