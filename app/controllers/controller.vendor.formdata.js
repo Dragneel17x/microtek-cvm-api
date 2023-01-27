@@ -169,7 +169,7 @@ exports.approveForm = async (req, res) => {
 	if (form_data.length) {
 		const form_id = form_data[0].request_id;
 		if (status == "rejected") {
-			const change_approval_status = await sequelize.query(`UPDATE approval_inbox SET status = 'neglect', approver_remarks = 'rejected by previous approver', updated_by = 'auto' WHERE request_id = ${form_id} and approval_id != ${approval_id} and request_type = 'customer_form';`, { type: QueryTypes.INSERT });
+			const change_approval_status = await sequelize.query(`UPDATE approval_inbox SET status = 'neglect', approver_remarks = 'rejected by previous approver', updated_by = 'auto' WHERE request_id = ${form_id} and approval_id != ${approval_id} and request_type = 'vendor_form';`, { type: QueryTypes.INSERT });
 			console.log(change_approval_status);
 			const leave_status = await sequelize.query(`UPDATE vendor_form_data set status = '${status}' where id = '${form_id}'`, { type: QueryTypes.INSERT });
 			console.log(leave_status);
