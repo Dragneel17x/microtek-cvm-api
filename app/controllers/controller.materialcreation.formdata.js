@@ -253,16 +253,16 @@ exports.postFormData = async (req, res) => {
 		/* console.log(Object.keys(formdata)); */
 
 		try {
-			const approval_data = await sequelize.query(`select * from approval_matrix where approval_type = 'vendor_form' order by approval_level;`, { type: QueryTypes.SELECT });
-			console.log(approval_data);
+/* 			const approval_data = await sequelize.query(`select * from approval_matrix where approval_type = 'vendor_form' order by approval_level;`, { type: QueryTypes.SELECT });
+			console.log(approval_data); */
 
 			const data = await sequelize.query(`insert into material_creation_form_data (mat_type, mat_logic_no, plant_name , storage_location ,sales_organization, mat_short_desc, dist_channel, base_unit, mat_long_desc, dist_channel, mat_group, division, mat_price_grp, purchasing_grp, gr_proc_time, hsn_code, serial_no_profile, quality_inspection ,price_control, price_control_desc, valutaion_type) values ('${formData.mat_type}','${formData.mat_logic_no}','${formData.plant_name}','${formData.storage_location}','${formData.mat_sales_org}','${formData.mat_short_desc}','${formData.base_unit_measure}','${formData.mat_long_desc}','${formData.mat_dist_channel}','${formData.mat_grp}','${formData.mat_div}','${formData.mat_price_grp}','${formData.gr_proc_time}','${formData.hsn_code}','${formData.serial_no_profile}','${formData.quality_insp_type}','${formData.valuation_type}')`, { type: QueryTypes.INSERT });
 			console.log(data);
 
-			approval_data.map(async (item,i) => {
+/* 			approval_data.map(async (item,i) => {
 				const insert_approval = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('vendor_form',${data[0]},'${item.approval_level}','${formData.employee_id}','${item.approver_employee_id}','${i==0? "pending":"future_approval"}','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
 				console.log(insert_approval);
-			});
+			}); */
 			const send_data = {
 				status: 200,
 				message: "data Insereted successfully",
