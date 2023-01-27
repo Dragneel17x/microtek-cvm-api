@@ -16,6 +16,7 @@ exports.getPlantData = async (req,res)=>{
 		message: "data fetched successfully",
 	};
 	res.status(200).send(send_data);
+
 }
 /* exports.getStorageLocation = async (req,res)=>{
 
@@ -255,11 +256,9 @@ exports.postFormData = async (req, res) => {
 			const approval_data = await sequelize.query(`select * from approval_matrix where approval_type = 'vendor_form' order by approval_level;`, { type: QueryTypes.SELECT });
 			console.log(approval_data);
 
-			const data = await sequelize.query(`insert into material_creation_form_data (mat_type,mat_logic_no, plant_name, plant_code, storage_location, storage_location_code,sales_organization,sales_organization_code,mat_short_desc,dist_channel,base_unit,base_unit_code,mat_long_desc,dist_channel,dist_channel_code,mat_group, mat_grp_code,division,division_code,mat_price_grp,mat_price_grp_code,purchasing_grp,purchasing_grp_code,gr_proc_time,hsn_code,serial_no_profile,quality_inspection,quality_inspection_code,price_control,price_control_desc, valutaion_type) values ('${formData.vendor_group}','${formData.vendor_name}','${formData.vendor_name_op1}','${formData.vendor_address}','${formData.vendor_address_op1}','${formData.vendor_address_op2}','${formData.vendor_address_op3}','${formData.district}','${formData.state_code}','${formData.city}','${formData.postal_code}','${formData.country}','${formData.co_person}','${formData.mobile_no}','${formData.email_id}','${formData.company_code}','${formData.pay_term}','${formData.gstin}','${formData.pan}','${formData.employee_id}', '${formData.employee_id}','${formData.order_currency}','${formData.name_on_acc}','${formData.bank_acc_no}','${formData.ifsc_code}','${formData.purchasing_org}','${formData.witholding_tax}')`, { type: QueryTypes.INSERT });
+			const data = await sequelize.query(`insert into material_creation_form_data (mat_type, mat_logic_no, plant_name , storage_location ,sales_organization, mat_short_desc, dist_channel, base_unit, mat_long_desc, dist_channel, mat_group, division, mat_price_grp, purchasing_grp, gr_proc_time, hsn_code, serial_no_profile, quality_inspection ,price_control, price_control_desc, valutaion_type) values ('${formData.mat_type}','${formData.mat_logic_no}','${formData.plant_name}','${formData.storage_location}','${formData.mat_sales_org}','${formData.mat_short_desc}','${formData.base_unit_measure}','${formData.mat_long_desc}','${formData.mat_dist_channel}','${formData.mat_grp}','${formData.mat_div}','${formData.mat_price_grp}','${formData.gr_proc_time}','${formData.hsn_code}','${formData.serial_no_profile}','${formData.quality_insp_type}','${formData.valuation_type}')`, { type: QueryTypes.INSERT });
 			console.log(data);
 
-			const postData = await sequelize.query(`INSERT INTO file_path_mapping (form_data_id , form_type, blank_cheque, GST_Image, PAN_Image, declaration, DAPF) VALUES (${data[0]} , 'vendor_form','${reqFile?.blank_cheque[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.GST_Image[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.PAN_Image[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}','${reqFile?.declaration[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}', '${reqFile?.DAPF[0]?.path.replace(/\\/g, "/").replace(/^dist\//, "")}')`, { type: QueryTypes.INSERT });
-			console.log("postdata" + postData);
 			approval_data.map(async (item,i) => {
 				const insert_approval = await sequelize.query(`INSERT INTO approval_inbox ( request_type, request_id, approval_level, applied_by, approver_employee_id, status, created_by, updated_by) VALUES ('vendor_form',${data[0]},'${item.approval_level}','${formData.employee_id}','${item.approver_employee_id}','${i==0? "pending":"future_approval"}','${formData.employee_id}','${formData.employee_id}');`, { type: QueryTypes.INSERT });
 				console.log(insert_approval);
