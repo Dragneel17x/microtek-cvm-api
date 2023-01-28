@@ -444,7 +444,10 @@ exports.getfiles = async (req, res) => {
 	try {
 		let final_data = {
 			blank_cheque:"",
-
+			gst_image:"",
+			pan_image:"",
+			declaration:"",
+			dapf:""
 		}
 		const form_data = await sequelize.query(`select * from file_path_mapping where form_data_id = '${form_id}' and form_type = 'customer_form' ;`, { type: QueryTypes.SELECT });
 		console.log(form_data);
@@ -459,6 +462,26 @@ exports.getfiles = async (req, res) => {
 			var file;
 			file = fs.readFileSync(form_data[0]?.blank_cheque, 'base64');
 			final_data.blank_cheque = file;
+		}
+		if (form_data[0]?.GST_Image != 'undefined') {
+			var file;
+			file = fs.readFileSync(form_data[0]?.GST_Image, 'base64');
+			final_data.gst_image = file;
+		}
+		if (form_data[0]?.PAN_Image != 'undefined') {
+			var file;
+			file = fs.readFileSync(form_data[0]?.PAN_Image, 'base64');
+			final_data.pan_image = file;
+		}
+		if (form_data[0]?.declaration != 'undefined') {
+			var file;
+			file = fs.readFileSync(form_data[0]?.declaration, 'base64');
+			final_data.declaration = file;
+		}
+		if (form_data[0]?.DAPF != 'undefined') {
+			var file;
+			file = fs.readFileSync(form_data[0]?.DAPF, 'base64');
+			final_data.dapf = file;
 		}
 		const send_data = {
 			status: "200",
