@@ -245,11 +245,10 @@ exports.postFormData = async (req, res) => {
 			status: "401",
 			message: "all parameters required",
 		};
-
 		res.status(401).send(send_data);
 	} */
-	if(false){}
-	else {
+
+
 		/* console.log(Object.keys(formdata)); */
 
 		try {
@@ -275,6 +274,6 @@ exports.postFormData = async (req, res) => {
 				message: "Unexcexpted Error Occured",
 			};
 			res.status(500).send(send_data);
-		}
-	}
+		
+	    }
 };
