@@ -12,7 +12,7 @@ var CronJob = require('cron').CronJob;
 var verify_gst_Job = new CronJob(
     '*/30 * * * *',
     function () {
-        gst_verification();
+        //gst_verification();
     },
     null,
     true

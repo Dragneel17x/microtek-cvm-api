@@ -134,7 +134,7 @@ exports.getSubmissionView = async (req, res) => {
 		res.status(401).send(send_data);
 	}
 	try {
-		const form_data = await sequelize.query(`select cfd.*, ai.status ai_status, ai.approval_level, ai.approver_remarks, approver_employee_id from vendor_form_data cfd left join approval_inbox ai on cfd.id = ai.request_id  where cfd.created_by = '${employee_id}'`, { type: QueryTypes.SELECT });
+		const form_data = await sequelize.query(`select cfd.*, ai.status ai_status, ai.approval_level, ai.approver_remarks, approver_employee_id from vendor_form_data cfd left join approval_inbox ai on cfd.id = ai.request_id  where cfd.created_by = '${employee_id}' and ai.request_type = 'vendor_form'`, { type: QueryTypes.SELECT });
 		console.log(form_data);
 		const send_data = {
 			status: "200",
@@ -179,7 +179,7 @@ exports.approveForm = async (req, res) => {
 			});
 			return;
 		}
-		const approval_data_next = await sequelize.query(`select * from approval_inbox where request_id = ${form_id} and status = 'future_approval' order by approval_level limit 1;`, { type: QueryTypes.SELECT });
+		const approval_data_next = await sequelize.query(`select * from approval_inbox where request_id = ${form_id} and status = 'future_approval' and request_type = 'vendor_form' order by approval_level limit 1;`, { type: QueryTypes.SELECT });
 		console.log(approval_data_next);
 		if (approval_data_next.length) {
 			const next_approval = approval_data_next[0].approval_id;

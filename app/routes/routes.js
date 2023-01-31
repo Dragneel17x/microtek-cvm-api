@@ -79,15 +79,19 @@ module.exports = app => {
     cvm.post('/get-state-list', form_data.getStateList)
     cvm.post('/approve-form', form_data.approveForm)
     cvm.post('/approve-vendor-form', vendor_form_data.approveForm)
+    cvm.post('/approve-material-form', material_creation_data.approveForm)
     cvm.post('/get-approval-forms', form_data.customerFormApplrovals)
     cvm.post('/get-vendor-approval-forms', vendor_form_data.vendorFormApplrovals)
-    cvm.post('/get-materia-approval-forms', material_creation_data.materialFormApplrovals)
+    cvm.post('/get-material-approval-forms', material_creation_data.materialFormApplrovals)
     cvm.post('/get-submission-view', form_data.getSubmissionView)
     cvm.post('/get-submission-vendor-view', vendor_form_data.getSubmissionView)
+    cvm.post('/get-submission-material-view', material_creation_data.getSubmissionView)
     cvm.post('/get-mdm-view', form_data.getAllFormsMDM);
     cvm.post('/get-vendor-mdm-view', vendor_form_data.getAllFormsMDM);
+    cvm.post('/get-material-mdm-view', material_creation_data.getAllFormsMDM);
     cvm.post('/add-sap-code', form_data.addtoSAP);
     cvm.post('/add-vendor-sap-code', vendor_form_data.addtoSAP);
+    cvm.post('/add-material-sap-code', material_creation_data.addtoSAP);
     cvm.post('/post-form-data',upload.fields([{name:"blank_cheque",maxCount:1},{name:"GST_Image",maxCount:1},{name:"PAN_Image",maxCount:1},{name:"declaration",maxCount:1},{name:"DAPF",maxCount:1}]), form_data.postFormData)
     cvm.post('/post-vendor-form-data',upload.fields([{name:"blank_cheque",maxCount:1},{name:"GST_Image",maxCount:1},{name:"PAN_Image",maxCount:1}]), vendor_form_data.postFormData);
     cvm.post('/post-material-form-data', material_creation_data.postFormData);
