@@ -18,17 +18,7 @@ exports.getPlantData = async (req,res)=>{
 	res.status(200).send(send_data);
 
 }
-/* exports.getStorageLocation = async (req,res)=>{
 
-	const getPlantData = await sequelize.query(`select * from plant_master`, { type: QueryTypes.SELECT });
-	const send_data = {
-		status: 200,
-		data: getPlantData,
-		message: "data fetched successfully",
-	};
-	res.status(200).send(send_data);
-    console.log(send_data);
-} */
 exports.getStorageLocation= async (req, res) => {
 	const { plant_name } = req.body;
 	if (!plant_name) {
