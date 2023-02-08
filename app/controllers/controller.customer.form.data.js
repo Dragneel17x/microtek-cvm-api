@@ -15,6 +15,9 @@ exports.getCustomerGroup = async (req, res) => {
 	};
 	res.status(200).send(send_data);
 };
+
+
+
 exports.getCountryCodes = async (req, res) => {
 	const code_data = await sequelize.query(`select distinct(country) country, country_code from county_state_master;`, {
 		type: QueryTypes.SELECT,
@@ -334,7 +337,7 @@ exports.customerFormApplrovals = async (req, res) => {
 			status: "401",
 			message: "all parameters required",
 		};
-		res.status(401).send(send_data);
+		res.status(401).send(send_data);	
 	}
 	const form_data = await sequelize.query(`select * from approval_inbox ai left outer join customer_form_data cfd on ai.request_id = cfd.id where request_type = 'customer_form' and approver_employee_id = '${employee_id}' and ai.status = 'pending';`, { type: QueryTypes.SELECT });
 	console.log(form_data);

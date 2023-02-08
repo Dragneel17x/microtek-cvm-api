@@ -1,4 +1,4 @@
-/* module.exports = {
+module.exports = {
   HOST: "localhost",
   USER: "root",
   PASSWORD: "admin",            //Windows Local DB and Testing Server DB
@@ -11,9 +11,9 @@
     acquire: 30000,
     idle: 10000
   }
-}; */
+};
 
-module.exports = {
+/* module.exports = {
   HOST: "localhost",
   USER: "root",
   PASSWORD: "Q@4bHP$87%89",   //Production Server DB
@@ -27,3 +27,4 @@ module.exports = {
     idle: 10000
   }
 };
+ */
