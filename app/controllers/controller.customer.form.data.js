@@ -373,7 +373,7 @@ exports.getSubmissionView = async (req, res) => {
 		res.status(401).send(send_data);
 	}
 	try {
-		const form_data = await sequelize.query(`select cfd.*, ai.status ai_status, ai.approval_level, ai.approver_remarks, approver_employee_id from customer_form_data cfd left join approval_inbox ai on cfd.id = ai.request_id  where cfd.created_by = '${employee_id}' and ai.request_type = 'customer_form'`, { type: QueryTypes.SELECT });
+		const form_data = await sequelize.query(`select er.name_of_the_eployee approver_employee_name, er.mail_id_official approver_mail_id, er.mobile_nuumber_personal approver_phone number,cfd.*, ai.status ai_status, ai.approval_level, ai.approver_remarks, approver_employee_id from customer_form_data cfd left join approval_inbox ai on cfd.id = ai.request_id left outer join test.employee_records er on er.new_e_code = ai.approver_employee_id  where cfd.created_by = '${employee_id}' and ai.request_type = 'customer_form'`, { type: QueryTypes.SELECT });
 		console.log(form_data);
 		const send_data = {
 			status: "200",
