@@ -8,7 +8,6 @@ module.exports = app => {
     const form_data = require("../controllers/controller.customer.form.data")
     const vendor_form_data = require('../controllers/controller.vendor.formdata')
     const material_creation_data = require('../controllers/controller.materialcreation.formdata')
-    const material_creation_data = require('../controllers/controller.materialcreation.formdata')
     const report_data = require('../controllers/controller.report')
 
     // Router Define
