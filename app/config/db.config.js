@@ -5,6 +5,7 @@ module.exports = {
   DB: "cvm_db",                   //macOS, Windows, Testing Server DB
   dialect: "mysql",
   timeZone: 'ist',
+  main_db: "test",
   pool: {
     max: 5,
     min: 0,
@@ -20,6 +21,7 @@ module.exports = {
   DB: "cvm_db",                   //macOS, Windows, Testing Server DB
   dialect: "mysql",
   timeZone: 'ist',
+  main_db: "mtek_db",
   pool: {
     max: 5,
     min: 0,
