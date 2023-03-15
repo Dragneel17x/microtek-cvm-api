@@ -1,7 +1,7 @@
 module.exports = {
-  HOST: "localhost",
-  USER: "root",
-  PASSWORD: "admin",            //Windows Local DB and Testing Server DB
+  HOST: "192.168.1.7",
+  USER: "testuser",
+  PASSWORD: "testuser@1234",            //Windows Local DB and Testing Server DB
   DB: "cvm_db",                   //macOS, Windows, Testing Server DB
   dialect: "mysql",
   timeZone: 'ist',

@@ -6,6 +6,7 @@ const sequelize = db.sequelize;
 const jwt = require("jsonwebtoken");
 const { QueryTypes } = require("sequelize");
 const flag = require("../Flag");
+const server_conf = require("../config/server.config")
 
 exports.getCustomerGroup = async (req, res) => {
 	const getCustomerGroup = await sequelize.query("select * from customer_grp_list_master", { type: QueryTypes.SELECT });
@@ -339,10 +340,43 @@ exports.customerFormApplrovals = async (req, res) => {
 	}
 	const form_data = await sequelize.query(`select * from approval_inbox ai left outer join customer_form_data cfd on ai.request_id = cfd.id where request_type = 'customer_form' and approver_employee_id = '${employee_id}' and ai.status = 'pending';`, { type: QueryTypes.SELECT });
 	console.log(form_data);
-
+	const final_data = await Promise.all(
+		form_data?.map(async item => {
+			const attachment_data = await sequelize.query(`select * from file_path_mapping where form_data_id = ${item.id} and form_type = 'customer_form';`, { type: QueryTypes.SELECT });
+			console.log(attachment_data);
+			//console.log(item.id);
+			if (attachment_data[0].DAPF) {
+				var img = attachment_data[0].DAPF?.split("/")[1]
+				console.log(img);
+				const img_url = server_conf.base_url_for_attachment + img
+				item.DAPF = img_url
+			}
+			if (attachment_data[0].declaration) {
+				var img = attachment_data[0].declaration?.split("/")[1]
+				const img_url = server_conf.base_url_for_attachment + img
+				item.declaration = img_url
+			}
+			if (attachment_data[0].PAN_Image) {
+				var img = attachment_data[0].PAN_Image?.split("/")[1]
+				const img_url = server_conf.base_url_for_attachment + img
+				item.PAN_Image = img_url
+			}
+			if (attachment_data[0].GST_Image) {
+				var img = attachment_data[0].GST_Image?.split("/")[1]
+				const img_url = server_conf.base_url_for_attachment + img
+				item.GST_Image = img_url
+			}
+			if (attachment_data[0].blank_cheque) {
+				var img = attachment_data[0].blank_cheque?.split("/")[1]
+				const img_url = server_conf.base_url_for_attachment + img
+				item.blank_cheque = img_url
+			}
+			return item;
+		})
+	)
 	const send_data = {
 		status: "200",
-		data: form_data,
+		data: final_data,
 		message: "Data Fetched Successfully",
 	};
 	res.status(200).send(send_data);
@@ -372,10 +406,44 @@ exports.getSubmissionView = async (req, res) => {
 	}
 	try {
 		const form_data = await sequelize.query(`select er.name_of_the_eployee approver_employee_name, er.mail_id_official approver_mail_id, er.mobile_nuumber_personal approver_phone_number,cfd.*, ai.status ai_status, ai.approval_level, ai.approver_remarks, approver_employee_id from customer_form_data cfd left join approval_inbox ai on cfd.id = ai.request_id left outer join ${dbConfig.main_db}.employee_records er on er.new_e_code = ai.approver_employee_id  where cfd.created_by = '${employee_id}' and ai.request_type = 'customer_form'`, { type: QueryTypes.SELECT });
-		console.log(form_data);
+		//console.log(form_data);
+		const final_data = await Promise.all(
+            form_data?.map(async item => {
+                const attachment_data = await sequelize.query(`select * from file_path_mapping where form_data_id = ${item.id} and form_type = 'customer_form';`, { type: QueryTypes.SELECT });
+                console.log(attachment_data);
+                //console.log(item.id);
+                if (attachment_data[0].DAPF) {
+                    var img = attachment_data[0].DAPF?.split("/")[1]
+					console.log(img);
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.DAPF = img_url
+                }
+                if (attachment_data[0].declaration) {
+                    var img = attachment_data[0].declaration?.split("/")[1]
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.declaration = img_url
+                }
+                if (attachment_data[0].PAN_Image) {
+                    var img = attachment_data[0].PAN_Image?.split("/")[1]
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.PAN_Image = img_url
+                }
+                if (attachment_data[0].GST_Image) {
+                    var img = attachment_data[0].GST_Image?.split("/")[1]
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.GST_Image = img_url
+                }
+                if (attachment_data[0].blank_cheque) {
+                    var img = attachment_data[0].blank_cheque?.split("/")[1]
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.blank_cheque = img_url
+                }
+				return item;
+            })
+        )
 		const send_data = {
 			status: "200",
-			data: form_data,
+			data: final_data,
 			message: "Data Fetched Successfully",
 		};
 		res.status(200).send(send_data);
@@ -392,9 +460,43 @@ exports.getAllFormsMDM = async (req, res) => {
 	try {
 		const form_data = await sequelize.query(`select * from customer_form_data where status = 'approved' and added_to_sap = false;`, { type: QueryTypes.SELECT });
 		console.log(form_data);
+		const final_data = await Promise.all(
+            form_data?.map(async item => {
+                const attachment_data = await sequelize.query(`select * from file_path_mapping where form_data_id = ${item.id} and form_type = 'customer_form';`, { type: QueryTypes.SELECT });
+                console.log(attachment_data);
+                //console.log(item.id);
+                if (attachment_data[0].DAPF) {
+                    var img = attachment_data[0].DAPF?.split("/")[1]
+					console.log(img);
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.DAPF = img_url
+                }
+                if (attachment_data[0].declaration) {
+                    var img = attachment_data[0].declaration?.split("/")[1]
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.declaration = img_url
+                }
+                if (attachment_data[0].PAN_Image) {
+                    var img = attachment_data[0].PAN_Image?.split("/")[1]
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.PAN_Image = img_url
+                }
+                if (attachment_data[0].GST_Image) {
+                    var img = attachment_data[0].GST_Image?.split("/")[1]
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.GST_Image = img_url
+                }
+                if (attachment_data[0].blank_cheque) {
+                    var img = attachment_data[0].blank_cheque?.split("/")[1]
+                    const img_url = server_conf.base_url_for_attachment + img
+                    item.blank_cheque = img_url
+                }
+				return item;
+            })
+        )
 		const send_data = {
 			status: "200",
-			data: form_data,
+			data: final_data,
 			message: "Data Fetched Successfully",
 		};
 		res.status(200).send(send_data);

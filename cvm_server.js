@@ -23,7 +23,7 @@ app.use((error, req, res, next) => {
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static('uploads'));
+app.use('/v1/api/cvm/docs', express.static(__dirname+'/uploads'))
 
 
 const db = require("./app/models");
